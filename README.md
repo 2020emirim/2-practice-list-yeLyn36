@@ -13,3 +13,6 @@
 - views BookmarkList
 - templates bookmark_list.html
 - views BookmarkCreateView
+- templetes bookmark_create
+- urls add
+- modify bookmark_list
