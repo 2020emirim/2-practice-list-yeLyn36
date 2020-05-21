@@ -16,3 +16,4 @@
 - templetes bookmark_create
 - urls add
 - modify bookmark_list
+- views BookmarkDetailView
