@@ -17,3 +17,5 @@
 - urls add
 - modify bookmark_list
 - views BookmarkDetailView
+- templates bookmark_detail
+- urls detail/<int:pk>
