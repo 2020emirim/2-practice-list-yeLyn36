@@ -1,38 +1,58 @@
 {% extends 'base.html' %}
 
-{% block title %}Confirm Delete{% endblock %}
+{% block title %}List{% endblock %}
 
- {% block content %}
-    <!-- CSS only -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-<!-- JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-<a href="{% url 'bookmark:add' %}}">Add Bookmark</a>
-<p></p>
-<table>
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Site</th>
-        <th>URL</th>
-        <th>Modify</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for bookmark in bookmark_list %}
+{% block content %}
+    <a href="{% url 'bookmark:add' %}" class="btn btn-primary btn-sm">Add Bookmark</a>
+    <p/>
+    <table class="table">
+        <thead>
         <tr>
-            <td>{{forloop.counter}}</td>
-            <td><a href="{% url 'bookmark:detail' pk=bookmark.id  %}">{{ bookmark.site_name }}</a></td>
-            <td><a href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
-             <td><a href="{% url 'bookmark:update' pk=bookmark.id %}">Modify</a></td>
-             <td><a href="{% url 'bookmark:delete' pk=bookmark.id %}">Delete</a></td>
+            <th>#</th>
+            <th>Site</th>
+            <th>URL</th>
+            <th>Modify</th>
+            <th>Delete</th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for bookmark in bookmark_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{%  url 'bookmark:detail' pk=bookmark.id %}">{{ bookmark.site_name }}</a></td>
+                <td><a href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
+                <td><a href="{% url 'bookmark:update' pk=bookmark.id %}" class="btn btn-success btn-sm">Modify</a></td>
+                <td><a href="{% url 'bookmark:delete' pk=bookmark.id %}" class="btn btn-danger btn-sm">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block pagination %}
+    <ul class="pagination pagination-sm justify-content-center">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a href="" class="page-link">Previous</a>
+        </li>
+    {% endif %}
+         {% for page in page_obj.paginator.page_range %}
+             <li class="page-item {% if page_obj.number == forloop.counter %} disabled {% else %} active{% endif %}">
+                 <a href="{{ request.path }}?page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+             </li>
+         {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="page-item">
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a href="" class="page-link">Next</a>
+        </li>
+    {% endif %}
+    </ul>
 {% endblock %}

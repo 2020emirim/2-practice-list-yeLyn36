@@ -23,3 +23,4 @@
 - update :  views BookmarkUpdateView, templeate bookmark_update.html, urls, modify Modify link
 - delete :  views BookmarkUpdateView, templeate bookmark_confirm_delete.html, urls, modify Delete link
 - Cancel Button 만들기, base.html 확장하기, Bootstrap 적용하기
+- pagination
